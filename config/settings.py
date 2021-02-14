@@ -23,10 +23,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_IPSUM_SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Environment-specific config
+env = os.getenv("IPSUM_ENV")
+if env not in ["dev", "prod"]:
+    raise ValueError(
+        'Environment variable not set or incorrect: IPSUM_ENV should be "dev" or "prod"'
+    )
+elif env == "dev":
+    DEBUG = True
+    ALLOWED_HOSTS = ["127.0.0.1"]
+elif env == "prod":
+    DEBUG = False
+    ALLOWED_HOSTS = [os.getenv("DJANGO_IPSUM_ALLOWED_HOSTS")]
 
-ALLOWED_HOSTS = []
+else:
+    raise ValueError("Something really weird happened with the environments.")
 
 
 # Application definition
