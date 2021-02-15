@@ -1,1 +1,5 @@
 Django==3.1.6
+
+# PythonAnywhere uses python-dotenv in its configuration to access local env vars 
+# See https://help.pythonanywhere.com/pages/environment-variables-for-web-apps
+python-dotenv 
